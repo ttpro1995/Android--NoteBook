@@ -1,5 +1,8 @@
 package com.example.tt.notebook;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,49 +21,66 @@ import java.util.ArrayList;
 
 public class NoteManager {
 
-    public String ALL_NOTE_NAME ="haha_ttpro_note_name_001927003.txt";//a file that will contain name of all note
-    public ArrayList<String> p_arr;
 
+    private  String ALL_NOTE_NAME ="Con_meo_Note_name-12345.txt";//a file that will contain name of all note
+    private ArrayList<String> p_arr;
+    private Context context;
 
-    public void init(){
+    public NoteManager(Context context) {
+        this.context = context;
+        init();
+    }
+
+    private void init(){
         p_arr = new ArrayList<String>();
     }
 
     public void ReadNoteName(){
         // read notename from file --> array
         try {
-            FileInputStream in = new FileInputStream(ALL_NOTE_NAME);
+            p_arr.clear();
+            FileInputStream in = context.openFileInput(ALL_NOTE_NAME);
             InputStreamReader inputStreamReader = new InputStreamReader(in);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String tmp;//save single file name
             while ((tmp = bufferedReader.readLine())!=null){
                 p_arr.add(tmp);
+                Log.i("conMeo", "Read");
             }
+
         }
         catch (FileNotFoundException e){
-            File f = new File(ALL_NOTE_NAME);
+
+            Log.i("conMeo", "read filenotfound");
         }
         catch (IOException e){
             //i dont know what to do
+            Log.i("conMeo", "read io");
         }
     }
 
     public void SaveNoteName(){
         //write note name into file
         try{
-            FileOutputStream out = new FileOutputStream(ALL_NOTE_NAME);
+            FileOutputStream out = context.openFileOutput(ALL_NOTE_NAME,0);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
            for (int i=0;i<p_arr.size();i++)
            {
                outputStreamWriter.write(p_arr.get(i));
                outputStreamWriter.write("\n");//new line
+
+               Log.i("conMeo", "Save");
            }
+            outputStreamWriter.close();
+
         }
         catch (FileNotFoundException e){
-            File f = new File(ALL_NOTE_NAME);
+
+            Log.i("conMeo", "save filenotfound");
         }
         catch (IOException e){
             //what ?
+            Log.i("conMeo", "save io");
         }
     }
 
@@ -71,17 +91,20 @@ public class NoteManager {
     public boolean AddFile(String NOTE_NAME)
     {
         //check dublicate here
-        try {
-            Throwable a = new Throwable();
-            if (NOTE_NAME == ALL_NOTE_NAME) throw  a;
-            for (int i = 0; i < p_arr.size(); i++) {
-                if (NOTE_NAME == p_arr.get(i))
-                    throw a ;
-            }
-        }
-        catch (Throwable a){
-            return false;
-        }
+try {
+    Throwable a = new Throwable();
+    if (NOTE_NAME.equals(ALL_NOTE_NAME)) throw a;
+    for (int i = 0; i < p_arr.size(); i++) {
+        if (NOTE_NAME.equals(p_arr.get(i)))
+            throw  a;
+    }
+}
+catch (Throwable a)
+{
+    Log.i("conMeo","Dublicate");
+    return false;
+}
+
 
         // NOTE_NAME shouldn't have .txt or whatever
         p_arr.add(NOTE_NAME);
