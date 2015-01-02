@@ -29,6 +29,7 @@ public class NoteManager {
     public NoteManager(Context context) {
         this.context = context;
         init();
+        ReadNoteName();
     }
 
     private void init(){
