@@ -1,6 +1,7 @@
 package com.example.tt.notebook;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +26,7 @@ import java.io.OutputStreamWriter;
 public class Edit_Note_Activity extends ActionBarActivity {
 
     //variable/////////
+
     private EditText NoteContent;
     private Button SaveButton;
     private Button DeleteButton;
@@ -40,11 +43,14 @@ public class Edit_Note_Activity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         NoteContent = (EditText) findViewById(R.id.NoteContentEditText);
         DeleteButton = (Button) findViewById(R.id.DeleteNoteButton);
         SaveButton = (Button) findViewById(R.id.SaveNoteButton);
         Bundle data = getIntent().getExtras();
         NOTE_NAME = data.get("name").toString();
+
+        this.setTitle(NOTE_NAME);
         FILE_NAME= NOTE_NAME+".txt";
         ReadFile();
 

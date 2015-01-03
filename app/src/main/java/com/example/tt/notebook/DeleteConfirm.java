@@ -30,6 +30,7 @@ public class DeleteConfirm extends ActionBarActivity {
         Bundle data;
         data = getIntent().getExtras();
        NOTE_NAME = data.get("name").toString();
+        this.setTitle(NOTE_NAME);
         noteNameTextView.setText(NOTE_NAME);
 
         Yes.setOnClickListener(new View.OnClickListener() {
