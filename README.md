@@ -8,5 +8,3 @@
 Screen background 
  http://caminopalmero.deviantart.com/art/Old-Paper-Texture-63582296
 <br>
-Button background
-http://spiteful-pie-stock.deviantart.com/art/Paper-Texture-78307923
