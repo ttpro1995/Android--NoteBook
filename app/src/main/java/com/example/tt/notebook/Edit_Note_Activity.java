@@ -50,6 +50,12 @@ public class Edit_Note_Activity extends ActionBarActivity {
         });
     }
 
+    protected void onResume()
+    {
+        super.onResume();
+        ReadFile();
+    }
+
     public void ReadFile()
     {
         String tmp;

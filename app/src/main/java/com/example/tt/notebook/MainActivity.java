@@ -54,6 +54,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    protected void onResume()
+    {
+        super.onResume();
+        updateList();
+    }
+
     public void updateList()
     {
         ArrayList<String> p_arr ;
