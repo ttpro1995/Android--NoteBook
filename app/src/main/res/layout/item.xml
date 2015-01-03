@@ -5,6 +5,8 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/itemTextView"/>
+    android:id="@+id/itemTextView"
+    android:textSize="40dp"
+    />
 
 </LinearLayout>
