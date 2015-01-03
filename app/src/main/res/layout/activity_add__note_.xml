@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/AddNoteButton"
         android:text="Add Note"
+        android:drawableLeft="@drawable/new_doc_50x50"
         />
 
 </LinearLayout>
