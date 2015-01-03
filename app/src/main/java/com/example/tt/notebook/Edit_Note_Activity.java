@@ -2,6 +2,7 @@ package com.example.tt.notebook;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +26,7 @@ public class Edit_Note_Activity extends ActionBarActivity {
     //variable/////////
     private EditText NoteContent;
     private Button SaveButton;
+    private Button DeleteButton;
     private String NOTE_NAME ;// no .txt
                                //only name
     private String FILE_NAME;//FILENAME =NOTE_NAME+".txt"
@@ -39,6 +41,7 @@ public class Edit_Note_Activity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NoteContent = (EditText) findViewById(R.id.NoteContentEditText);
+        DeleteButton = (Button) findViewById(R.id.DeleteNoteButton);
         SaveButton = (Button) findViewById(R.id.SaveNoteButton);
         Bundle data = getIntent().getExtras();
         NOTE_NAME = data.get("name").toString();
@@ -52,6 +55,16 @@ public class Edit_Note_Activity extends ActionBarActivity {
                 ReadFile();//update it on screen
             }
         });
+
+        DeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Edit_Note_Activity.this,DeleteConfirm.class);
+                intent.putExtra("name",NOTE_NAME);
+                startActivity(intent);
+            }
+        });
+
     }
 
     protected void onResume()

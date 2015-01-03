@@ -10,12 +10,26 @@
         android:id="@+id/NoteContentEditText"
         android:layout_weight="10"/>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/SaveNoteButton"
-        android:text="Save"
-        android:layout_weight="1"
-        />
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/SaveNoteButton"
+            android:text="Save"
+            android:layout_weight="1"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/DeleteNoteButton"
+            android:text="Delete"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
