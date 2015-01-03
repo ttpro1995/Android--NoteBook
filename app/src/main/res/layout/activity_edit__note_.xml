@@ -23,6 +23,7 @@
             android:text="Save"
             android:layout_weight="1"
             android:drawableLeft="@drawable/save_floppy_disk_50x50"
+
             />
         <Button
             android:layout_width="match_parent"
@@ -31,6 +32,7 @@
             android:text="Delete"
             android:layout_weight="1"
             android:drawableLeft="@drawable/recycle_bin_50x50"
+
             />
 
     </LinearLayout>

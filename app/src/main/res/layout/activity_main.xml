@@ -25,6 +25,8 @@
         android:text="New Note"
         android:id="@+id/NewNoteButton"
         android:drawableLeft="@drawable/new_doc_50x50"
+
+
         />
 
 </LinearLayout>
