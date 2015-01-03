@@ -27,7 +27,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         Log.i("conMeo", "OnCreate");
         list = (ListView) findViewById(R.id.listView);
+        NewNote = (Button) findViewById(R.id.NewNoteButton);
+
         noteManager = new NoteManager(this);
+
         noteManager.ReadNoteName();
         updateList();
         NewNote.setOnClickListener(new View.OnClickListener() {
