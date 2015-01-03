@@ -1,5 +1,6 @@
 package com.example.tt.notebook;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -34,6 +35,9 @@ public class Edit_Note_Activity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__note_);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         NoteContent = (EditText) findViewById(R.id.NoteContentEditText);
         SaveButton = (Button) findViewById(R.id.SaveNoteButton);
         Bundle data = getIntent().getExtras();

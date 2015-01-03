@@ -21,6 +21,8 @@ public class Add_Note_Activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__note_);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         nameEdit = (EditText) findViewById(R.id.NoteNameEditText);
         addButton = (Button) findViewById(R.id.AddNoteButton);
         noteManager = new NoteManager(this);
