@@ -32,6 +32,31 @@ public class NoteManager {
         ReadNoteName();
     }
 
+    public void RemoveNote(String NOTE_NAME)
+    {
+        //remove from list here
+        for (int i=0;i<p_arr.size();i++)
+        {
+            if (NOTE_NAME.equals(p_arr.get(i)))
+            {
+                p_arr.remove(i);
+                SaveNoteName();
+                ReadNoteName();
+                break;
+            }
+        }
+        ////////////
+
+        //remove Note file here
+        String FILE_NAME = NOTE_NAME+".txt";
+
+        if (context.deleteFile(FILE_NAME))
+            Log.i("conMeoFile", "File " + FILE_NAME +" deleted ");
+        else
+            Log.i("conMeoFile", "File " + FILE_NAME +" not deleted ");
+        ///////
+    }
+
     private void init(){
         p_arr = new ArrayList<String>();
     }
