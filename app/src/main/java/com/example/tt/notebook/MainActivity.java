@@ -51,9 +51,6 @@ public class MainActivity extends ActionBarActivity {
 
                 //debug code
                 Intent intent = new Intent(MainActivity.this, Drawer_edit_activity.class);
-
-
-
                 String note_name = noteManager.getP_arr().get(position);
                 intent.putExtra("name",note_name);
                 startActivity(intent);

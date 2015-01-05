@@ -8,5 +8,6 @@
     <string name="title_activity_edit__note_">Edit_Note_Activity</string>
     <string name="title_activity_delete_confirm">DeleteConfirm</string>
     <string name="title_activity_drawer_edit_activity">Drawer_edit_activity</string>
-
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
