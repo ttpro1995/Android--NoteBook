@@ -35,6 +35,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tt.notebook.MainActivity" />
         </activity>
+        <activity
+            android:name=".Drawer_edit_activity"
+            android:label="@string/title_activity_drawer_edit_activity" >
+        </activity>
     </application>
 
 </manifest>
