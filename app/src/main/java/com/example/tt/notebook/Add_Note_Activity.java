@@ -35,7 +35,7 @@ public class Add_Note_Activity extends ActionBarActivity {
                 String note_name = nameEdit.getText().toString();
                 noteManager.AddFile(note_name);
                 noteManager.SaveNoteName();
-                Intent intent = new Intent(Add_Note_Activity.this,Edit_Note_Activity.class);
+                Intent intent = new Intent(Add_Note_Activity.this,Drawer_edit_activity.class);
                 intent.putExtra("name",note_name);
                 startActivity(intent);
             }

@@ -16,6 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 
@@ -36,16 +43,50 @@ public class Drawer_edit_activity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_edit_activity);
-
-        list = (ListView) findViewById(R.id.DrawerListView);
         noteManager = new NoteManager(this);
+        //TODO: edit note
+        NoteContent = (EditText) findViewById(R.id.NoteContentEditTextDrawer);
+        SaveButton = (Button) findViewById(R.id.SaveNoteButtonDrawer);
+        DeleteButton = (Button) findViewById(R.id.DeleteNoteButtonDrawer);
+        Bundle data = getIntent().getExtras();
+        NOTE_NAME = data.getString("name");
+        this.setTitle(NOTE_NAME);
+        FILE_NAME = NOTE_NAME + ".txt";
+        ReadFile();
+
+        SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WriteFile();
+                ReadFile();
+               //TODO :make toast here
+            }
+        });
+
+        DeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Drawer_edit_activity.this,DeleteConfirm.class);
+                intent.putExtra("name",NOTE_NAME);
+                startActivity(intent);
+            }
+        });
+
+
+
+        //done complete drawer
+        //TODO: move to right and add action bar button to open list
+        list = (ListView) findViewById(R.id.DrawerListView);
         updateList();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
-       drawerLayout.openDrawer(list);//open drawer
-        //TODO: complete drawer
-        //TODO: edit note
-        
+      // drawerLayout.openDrawer(list);//open drawer
+
+
+
+
+
+
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,6 +95,8 @@ public class Drawer_edit_activity extends ActionBarActivity {
                 String note_name = noteManager.getP_arr().get(position);
                 NOTE_NAME = note_name;
                 Drawer_edit_activity.this.setTitle(NOTE_NAME);
+                FILE_NAME = NOTE_NAME+".txt";
+                ReadFile();
             }
         });
 
@@ -70,6 +113,54 @@ public class Drawer_edit_activity extends ActionBarActivity {
         ArrayAdapter adapter = new ArrayAdapter(this,R.layout.item,R.id.itemTextView,p_arr);
         list.setAdapter(adapter);
     }
+
+    public void ReadFile()
+    {
+        String tmp;
+        String out;
+        try {
+            FileInputStream in = openFileInput(FILE_NAME);
+            InputStreamReader inputStreamReader = new InputStreamReader(in);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuilder builder = new StringBuilder();
+            while ((tmp = bufferedReader.readLine())!=null)
+            {
+                builder.append(tmp);
+                builder.append("\n");
+            }
+            out = builder.toString();
+            NoteContent.setText(out);
+        }
+        catch (FileNotFoundException e)
+        {
+
+        }
+        catch (IOException e)
+        {
+
+        }
+
+    }
+
+    public void WriteFile()
+    {
+        String tmp;
+
+        try{
+            FileOutputStream out = openFileOutput(FILE_NAME,0);
+            OutputStreamWriter writer = new OutputStreamWriter(out);
+            writer.write(NoteContent.getText().toString());
+            writer.close();
+        }
+        catch (FileNotFoundException e){
+
+        }
+        catch (IOException e){
+            //do nothing
+        }
+    }
+
+
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,4 +184,6 @@ public class Drawer_edit_activity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     */
+
+
 }

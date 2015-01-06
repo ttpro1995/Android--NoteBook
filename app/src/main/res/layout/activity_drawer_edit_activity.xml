@@ -14,7 +14,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/NoteContentEditText"
+            android:id="@+id/NoteContentEditTextDrawer"
             android:layout_weight="10"/>
 
         <LinearLayout
@@ -25,7 +25,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/SaveNoteButton"
+                android:id="@+id/SaveNoteButtonDrawer"
                 android:text="Save"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/save_floppy_disk_50x50"
@@ -34,7 +34,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/DeleteNoteButton"
+                android:id="@+id/DeleteNoteButtonDrawer"
                 android:text="Delete"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/recycle_bin_50x50"
