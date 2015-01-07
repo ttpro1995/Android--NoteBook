@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -44,7 +45,7 @@ public class Drawer_edit_activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_edit_activity);
         noteManager = new NoteManager(this);
-        //TODO: edit note
+        //done: edit note
         NoteContent = (EditText) findViewById(R.id.NoteContentEditTextDrawer);
         SaveButton = (Button) findViewById(R.id.SaveNoteButtonDrawer);
         DeleteButton = (Button) findViewById(R.id.DeleteNoteButtonDrawer);
@@ -59,7 +60,9 @@ public class Drawer_edit_activity extends ActionBarActivity {
             public void onClick(View v) {
                 WriteFile();
                 ReadFile();
-               //TODO :make toast here
+               Toast toast = Toast.makeText(Drawer_edit_activity.this,"saved",Toast.LENGTH_SHORT);
+            toast.show();
+
             }
         });
 
@@ -75,7 +78,7 @@ public class Drawer_edit_activity extends ActionBarActivity {
 
 
         //done complete drawer
-        //TODO: move to right and add action bar button to open list
+        //done: move to right and add action bar button to open list
         list = (ListView) findViewById(R.id.DrawerListView);
         updateList();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -161,7 +164,7 @@ public class Drawer_edit_activity extends ActionBarActivity {
     }
 
 
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -177,13 +180,17 @@ public class Drawer_edit_activity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.open_drawer) {
+            if (!drawerLayout.isDrawerOpen(list))
+            drawerLayout.openDrawer(list);
+            else
+           drawerLayout.closeDrawers();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-    */
+
 
 
 }
