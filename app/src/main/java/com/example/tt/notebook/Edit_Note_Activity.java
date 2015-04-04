@@ -26,6 +26,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 
+// with no drawer
+//This activity is now useless
+//Which is replace by Drawer_edit_activity
+
 public class Edit_Note_Activity extends ActionBarActivity {
 
     //variable/////////
@@ -85,6 +89,7 @@ public class Edit_Note_Activity extends ActionBarActivity {
 
     public void ReadFile()
     {
+
         String tmp;
         String out;
         try {
@@ -113,6 +118,7 @@ public class Edit_Note_Activity extends ActionBarActivity {
 
     public void WriteFile()
     {
+
         String tmp;
 
         try{

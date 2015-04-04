@@ -2,6 +2,8 @@ package com.example.tt.notebook;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
 
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -44,6 +47,10 @@ public class Drawer_edit_activity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_edit_activity);
+
+        //reduce lag
+        new LoadLayoutBackground().execute();
+
         noteManager = new NoteManager(this);
         //done: edit note
         NoteContent = (EditText) findViewById(R.id.NoteContentEditTextDrawer);
@@ -118,7 +125,7 @@ public class Drawer_edit_activity extends ActionBarActivity {
     }
 
     public void ReadFile()
-    {
+    {//TODO: use thread
         String tmp;
         String out;
         try {
@@ -146,7 +153,7 @@ public class Drawer_edit_activity extends ActionBarActivity {
     }
 
     public void WriteFile()
-    {
+    {//TODO: use thread
         String tmp;
 
         try{
@@ -191,6 +198,21 @@ public class Drawer_edit_activity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private class LoadLayoutBackground extends AsyncTask<Void,Void,Drawable>
+    {
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            ResizeDrawable resizeTool = new ResizeDrawable(Drawer_edit_activity.this);
+            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            return image;
+        }
 
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            super.onPostExecute(drawable);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.Drawer_activity_layout_id);
+            linearLayout.setBackground(drawable);
+        }
+    }
 
 }
