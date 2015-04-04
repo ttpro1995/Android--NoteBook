@@ -28,13 +28,18 @@ import android.view.Display;
         //Get device dimensions
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         double deviceWidth = display.getWidth();
+        double deviceHeight = display.getHeight();
         BitmapDrawable bd=(BitmapDrawable) ((Activity)context).getResources().getDrawable(imageID);
         double imageHeight = bd.getBitmap().getHeight();
         double imageWidth = bd.getBitmap().getWidth();
         double ratio = deviceWidth / imageWidth;
         int newImageHeight = (int) (imageHeight * ratio);
         Bitmap bMap = BitmapFactory.decodeResource (((Activity)context).getResources(), imageID);
-        Drawable drawable = new BitmapDrawable(((Activity)context).getResources(),getResizedBitmap(bMap,newImageHeight,(int) deviceWidth));
+
+        //Error when rotate screen
+       // Drawable drawable = new BitmapDrawable(((Activity)context).getResources(),getResizedBitmap(bMap,newImageHeight,(int) deviceWidth));
+
+        Drawable drawable = new BitmapDrawable(((Activity)context).getResources(),getResizedBitmap(bMap,(int) deviceHeight,(int) deviceWidth));
         return drawable;
     }
 
