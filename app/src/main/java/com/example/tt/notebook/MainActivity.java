@@ -1,5 +1,6 @@
 package com.example.tt.notebook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -119,44 +120,11 @@ public class MainActivity extends ActionBarActivity {
     {
         @Override
         protected Drawable doInBackground(Void... params) {
-            Drawable image = ResizeImage(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            ResizeDrawable resizeTool = new ResizeDrawable(MainActivity.this);
+            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
             return image;
         }
 
-        public Drawable ResizeImage (int imageID) {
-
-            // ResizeImage and getResizedBitmap: http://stackoverflow.com/questions/13684947/resize-image-in-android-drawable
-            // pokerface
-
-        //Get device dimensions
-            Display display = getWindowManager().getDefaultDisplay();
-            double deviceWidth = display.getWidth();
-            BitmapDrawable bd=(BitmapDrawable) getResources().getDrawable(imageID);
-            double imageHeight = bd.getBitmap().getHeight();
-            double imageWidth = bd.getBitmap().getWidth();
-            double ratio = deviceWidth / imageWidth;
-            int newImageHeight = (int) (imageHeight * ratio);
-            Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageID);
-            Drawable drawable = new BitmapDrawable(getResources(),getResizedBitmap(bMap,newImageHeight,(int) deviceWidth));
-            return drawable;
-        }
-
-        /************************ Resize Bitmap *********************************/
-        public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-            // ResizeImage and getResizedBitmap: http://stackoverflow.com/questions/13684947/resize-image-in-android-drawable
-            // pokerface
-            int width = bm.getWidth();
-            int height = bm.getHeight();
-            float scaleWidth = ((float) newWidth) / width;
-            float scaleHeight = ((float) newHeight) / height;
-            // create a matrix for the manipulation
-            Matrix matrix = new Matrix();
-            // resize the bit map
-            matrix.postScale(scaleWidth, scaleHeight);
-            // recreate the new Bitmap
-            Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-            return resizedBitmap;
-        }
         @Override
         protected void onPostExecute(Drawable drawable) {
             super.onPostExecute(drawable);

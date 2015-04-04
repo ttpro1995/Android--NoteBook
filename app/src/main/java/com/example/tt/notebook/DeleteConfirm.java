@@ -1,5 +1,7 @@
 package com.example.tt.notebook;
 
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ public class DeleteConfirm extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_confirm);
+
+        new LoadLayoutBackground().execute();
+
         noteNameTextView = (TextView) findViewById(R.id.deleteNoteNameTextView);
         Yes=    (Button) findViewById(R.id.YesDeleteButton);
         No = (Button)findViewById(R.id.NoDeleteButton);
@@ -75,5 +81,23 @@ public class DeleteConfirm extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private class LoadLayoutBackground extends AsyncTask<Void,Void,Drawable>
+    {
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            ResizeDrawable resizeTool = new ResizeDrawable(DeleteConfirm.this);
+            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            return image;
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            super.onPostExecute(drawable);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.delete_confirm_activity_layout_id);
+            linearLayout.setBackground(drawable);
+        }
     }
 }

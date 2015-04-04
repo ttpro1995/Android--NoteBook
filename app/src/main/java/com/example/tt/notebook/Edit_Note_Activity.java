@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -43,6 +46,7 @@ public class Edit_Note_Activity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        new LoadLayoutBackground().execute();
 
         NoteContent = (EditText) findViewById(R.id.NoteContentEditText);
         DeleteButton = (Button) findViewById(R.id.DeleteNoteButton);
@@ -126,22 +130,6 @@ public class Edit_Note_Activity extends ActionBarActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -160,7 +148,23 @@ public class Edit_Note_Activity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private class LoadLayoutBackground extends AsyncTask<Void,Void,Drawable>
+    {
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            ResizeDrawable resizeTool = new ResizeDrawable(Edit_Note_Activity.this);
+            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            return image;
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            super.onPostExecute(drawable);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.EditNote_activity_layout_id);
+            linearLayout.setBackground(drawable);
+        }
     }
 }

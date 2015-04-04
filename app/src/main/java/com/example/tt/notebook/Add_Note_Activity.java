@@ -1,6 +1,8 @@
 package com.example.tt.notebook;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -20,8 +23,8 @@ public class Add_Note_Activity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__note_);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        new LoadLayoutBackground().execute();
 
         nameEdit = (EditText) findViewById(R.id.NoteNameEditText);
         addButton = (Button) findViewById(R.id.AddNoteButton);
@@ -63,5 +66,23 @@ public class Add_Note_Activity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private class LoadLayoutBackground extends AsyncTask<Void,Void,Drawable>
+    {
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            ResizeDrawable resizeTool = new ResizeDrawable(Add_Note_Activity.this);
+            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            return image;
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            super.onPostExecute(drawable);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.AddNote_activity_layout_id);
+            linearLayout.setBackground(drawable);
+        }
     }
 }

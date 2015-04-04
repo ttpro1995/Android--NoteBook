@@ -1,9 +1,12 @@
+<!-- android:background="@drawable/old_paper_texture_by_caminopalmero_720x1080"-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/AddNote_activity_layout_id"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     tools:context="com.example.tt.notebook.Add_Note_Activity"
-    android:background="@drawable/old_paper_texture_by_caminopalmero_720x1080">
+    >
 
    <EditText
        android:layout_width="match_parent"
