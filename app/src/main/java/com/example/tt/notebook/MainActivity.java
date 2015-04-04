@@ -1,16 +1,26 @@
 package com.example.tt.notebook;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -27,6 +37,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         Log.i("conMeo", "OnCreate");
 
+        //with LoadLayoutBackground , main thread is not lag any more
+        //resize job is doing in LoadLayoutBackground extend AsyncTask
+       new LoadLayoutBackground().execute();
 
         list = (ListView) findViewById(R.id.listView);
         NewNote = (Button) findViewById(R.id.NewNoteButton);
@@ -101,4 +114,55 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class LoadLayoutBackground extends AsyncTask<Void,Void,Drawable>
+    {
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            Drawable image = ResizeImage(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            return image;
+        }
+
+        public Drawable ResizeImage (int imageID) {
+
+            // ResizeImage and getResizedBitmap: http://stackoverflow.com/questions/13684947/resize-image-in-android-drawable
+            // pokerface
+
+        //Get device dimensions
+            Display display = getWindowManager().getDefaultDisplay();
+            double deviceWidth = display.getWidth();
+            BitmapDrawable bd=(BitmapDrawable) getResources().getDrawable(imageID);
+            double imageHeight = bd.getBitmap().getHeight();
+            double imageWidth = bd.getBitmap().getWidth();
+            double ratio = deviceWidth / imageWidth;
+            int newImageHeight = (int) (imageHeight * ratio);
+            Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageID);
+            Drawable drawable = new BitmapDrawable(getResources(),getResizedBitmap(bMap,newImageHeight,(int) deviceWidth));
+            return drawable;
+        }
+
+        /************************ Resize Bitmap *********************************/
+        public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+            // ResizeImage and getResizedBitmap: http://stackoverflow.com/questions/13684947/resize-image-in-android-drawable
+            // pokerface
+            int width = bm.getWidth();
+            int height = bm.getHeight();
+            float scaleWidth = ((float) newWidth) / width;
+            float scaleHeight = ((float) newHeight) / height;
+            // create a matrix for the manipulation
+            Matrix matrix = new Matrix();
+            // resize the bit map
+            matrix.postScale(scaleWidth, scaleHeight);
+            // recreate the new Bitmap
+            Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+            return resizedBitmap;
+        }
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            super.onPostExecute(drawable);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.Main_activity_layout_id);
+            linearLayout.setBackground(drawable);
+        }
+    }
+
 }
