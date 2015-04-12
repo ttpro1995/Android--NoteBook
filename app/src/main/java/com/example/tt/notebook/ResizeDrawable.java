@@ -15,6 +15,8 @@ import android.view.Display;
  */
  public final class ResizeDrawable {
 
+
+
     Context context;
     private String LOG_TAG;
     public ResizeDrawable(Context context) {

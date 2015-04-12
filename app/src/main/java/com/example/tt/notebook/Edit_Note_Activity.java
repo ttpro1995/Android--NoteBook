@@ -50,7 +50,7 @@ public class Edit_Note_Activity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        new LoadLayoutBackground().execute();
+
 
         NoteContent = (EditText) findViewById(R.id.NoteContentEditText);
         DeleteButton = (Button) findViewById(R.id.DeleteNoteButton);
@@ -84,6 +84,7 @@ public class Edit_Note_Activity extends ActionBarActivity {
     protected void onResume()
     {
         super.onResume();
+        new LoadLayoutBackground().execute();
         ReadFile();
     }
 
@@ -99,6 +100,8 @@ public class Edit_Note_Activity extends ActionBarActivity {
         super.onPause();
         UnloadBackground();
     }
+
+
 
 
 

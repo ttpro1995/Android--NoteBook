@@ -82,6 +82,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onPause() {
         super.onPause();
         UnloadBackground();
+
     }
 
     protected void onResume()
@@ -132,8 +133,8 @@ public class MainActivity extends ActionBarActivity {
     {
         @Override
         protected Drawable doInBackground(Void... params) {
-            ResizeDrawable resizeTool = new ResizeDrawable(MainActivity.this);
-            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            BackGroundSingleton backgroundSingleton = BackGroundSingleton.getInstance(MainActivity.this);
+            Drawable image = backgroundSingleton.getBackground();
             return image;
         }
 

@@ -28,7 +28,7 @@ public class DeleteConfirm extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_confirm);
         LOG_TAG=DeleteConfirm.class.getSimpleName();
-        new LoadLayoutBackground().execute();
+
 
         noteNameTextView = (TextView) findViewById(R.id.deleteNoteNameTextView);
         Yes=    (Button) findViewById(R.id.YesDeleteButton);
@@ -70,6 +70,11 @@ public class DeleteConfirm extends ActionBarActivity {
     }
 
 
+    protected void  onResume()
+    {
+        super.onResume();
+        new LoadLayoutBackground().execute();
+    }
 
 
     @Override
@@ -100,10 +105,10 @@ public class DeleteConfirm extends ActionBarActivity {
         @Override
         protected Drawable doInBackground(Void... params) {
             ResizeDrawable resizeTool = new ResizeDrawable(DeleteConfirm.this);
-            Drawable image=null;
 
-                image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
 
+            BackGroundSingleton backgroundSingleton = BackGroundSingleton.getInstance(DeleteConfirm.this);
+            Drawable image = backgroundSingleton.getBackground();
 
             return image;
         }

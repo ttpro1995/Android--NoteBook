@@ -127,6 +127,13 @@ public class Drawer_edit_activity extends ActionBarActivity {
         UnloadBackground();
     }
 
+
+    protected void  onResume()
+    {
+        super.onResume();
+        new LoadLayoutBackground().execute();
+    }
+
     public void updateList()
     {
         ArrayList<String> p_arr ;
@@ -214,8 +221,8 @@ public class Drawer_edit_activity extends ActionBarActivity {
     {
         @Override
         protected Drawable doInBackground(Void... params) {
-            ResizeDrawable resizeTool = new ResizeDrawable(Drawer_edit_activity.this);
-            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            BackGroundSingleton backgroundSingleton = BackGroundSingleton.getInstance(Drawer_edit_activity.this);
+            Drawable image = backgroundSingleton.getBackground();
             return image;
         }
 

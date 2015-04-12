@@ -1,5 +1,6 @@
 package com.example.tt.notebook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -24,7 +25,7 @@ public class Add_Note_Activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__note_);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        new LoadLayoutBackground().execute();
+
 
         nameEdit = (EditText) findViewById(R.id.NoteNameEditText);
         addButton = (Button) findViewById(R.id.AddNoteButton);
@@ -57,10 +58,17 @@ public class Add_Note_Activity extends ActionBarActivity {
         UnloadBackground();
     }
 
+    protected void  onResume()
+    {
+        super.onResume();
+        new LoadLayoutBackground().execute();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_add__note_, menu);
+
         return true;
     }
 
@@ -84,8 +92,12 @@ public class Add_Note_Activity extends ActionBarActivity {
     {
         @Override
         protected Drawable doInBackground(Void... params) {
-            ResizeDrawable resizeTool = new ResizeDrawable(Add_Note_Activity.this);
-            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+           // ResizeDrawable resizeTool = new ResizeDrawable(Add_Note_Activity.this);
+          //  Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+
+            BackGroundSingleton backgroundSingleton = BackGroundSingleton.getInstance(Add_Note_Activity.this);
+            Drawable image = backgroundSingleton.getBackground();
+
             return image;
         }
 
