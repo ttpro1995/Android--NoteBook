@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 
 public class DeleteConfirm extends ActionBarActivity {
-
+    private String LOG_TAG;
     private TextView noteNameTextView;
     private Button Yes;
     private Button No;
@@ -26,7 +27,7 @@ public class DeleteConfirm extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_confirm);
-
+        LOG_TAG=DeleteConfirm.class.getSimpleName();
         new LoadLayoutBackground().execute();
 
         noteNameTextView = (TextView) findViewById(R.id.deleteNoteNameTextView);
@@ -56,7 +57,17 @@ public class DeleteConfirm extends ActionBarActivity {
 
     }
 
+    private void UnloadBackground()
+    {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.delete_confirm_activity_layout_id);
+        linearLayout.setBackground(null);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UnloadBackground();
+    }
 
 
 
@@ -89,7 +100,11 @@ public class DeleteConfirm extends ActionBarActivity {
         @Override
         protected Drawable doInBackground(Void... params) {
             ResizeDrawable resizeTool = new ResizeDrawable(DeleteConfirm.this);
-            Drawable image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+            Drawable image=null;
+
+                image = resizeTool.FitScreen(R.drawable.old_paper_texture_by_caminopalmero_720x1080);
+
+
             return image;
         }
 
@@ -98,6 +113,7 @@ public class DeleteConfirm extends ActionBarActivity {
             super.onPostExecute(drawable);
             LinearLayout linearLayout = (LinearLayout)findViewById(R.id.delete_confirm_activity_layout_id);
             linearLayout.setBackground(drawable);
+
         }
     }
 }

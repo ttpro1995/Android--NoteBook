@@ -87,6 +87,21 @@ public class Edit_Note_Activity extends ActionBarActivity {
         ReadFile();
     }
 
+
+    private void UnloadBackground()
+    {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.EditNote_activity_layout_id);
+        linearLayout.setBackground(null);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UnloadBackground();
+    }
+
+
+
     public void ReadFile()
     {
 

@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
 
         //with LoadLayoutBackground , main thread is not lag any more
         //resize job is doing in LoadLayoutBackground extend AsyncTask
-        new LoadLayoutBackground().execute();
+
 
         list = (ListView) findViewById(R.id.listView);
         NewNote = (Button) findViewById(R.id.NewNoteButton);
@@ -72,11 +72,22 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    private void UnloadBackground()
+    {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.Main_activity_layout_id);
+        linearLayout.setBackground(null);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UnloadBackground();
+    }
 
     protected void onResume()
     {
         super.onResume();
-
+        new LoadLayoutBackground().execute();
         updateList();
     }
 

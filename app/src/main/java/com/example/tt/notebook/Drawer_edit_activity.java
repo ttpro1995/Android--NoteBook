@@ -115,6 +115,18 @@ public class Drawer_edit_activity extends ActionBarActivity {
 
     }
 
+    private void UnloadBackground()
+    {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.Drawer_activity_layout_id);
+        linearLayout.setBackground(null);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UnloadBackground();
+    }
+
     public void updateList()
     {
         ArrayList<String> p_arr ;

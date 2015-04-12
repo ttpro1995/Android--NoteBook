@@ -45,6 +45,17 @@ public class Add_Note_Activity extends ActionBarActivity {
         });
     }
 
+    private void UnloadBackground()
+    {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.AddNote_activity_layout_id);
+        linearLayout.setBackground(null);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UnloadBackground();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

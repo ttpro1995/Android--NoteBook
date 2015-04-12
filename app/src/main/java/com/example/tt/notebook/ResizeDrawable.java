@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Display;
 
 /**
@@ -15,10 +16,14 @@ import android.view.Display;
  public final class ResizeDrawable {
 
     Context context;
-
+    private String LOG_TAG;
     public ResizeDrawable(Context context) {
+        LOG_TAG = this.getClass().getSimpleName();
+
         this.context = context;
     }
+
+
 
     public Drawable FitScreen (int imageID) {
 
@@ -39,7 +44,13 @@ import android.view.Display;
         //Error when rotate screen
        // Drawable drawable = new BitmapDrawable(((Activity)context).getResources(),getResizedBitmap(bMap,newImageHeight,(int) deviceWidth));
 
-        Drawable drawable = new BitmapDrawable(((Activity)context).getResources(),getResizedBitmap(bMap,(int) deviceHeight,(int) deviceWidth));
+        Bitmap resizedBitmap =      getResizedBitmap(bMap,(int) deviceHeight,(int) deviceWidth);
+        Drawable drawable = new BitmapDrawable(((Activity)context).getResources(),resizedBitmap);
+
+        bMap.recycle(); //it is no longer need
+        //dont recycle resizedBitmap
+
+
         return drawable;
     }
 
@@ -56,7 +67,14 @@ import android.view.Display;
         // resize the bit map
         matrix.postScale(scaleWidth, scaleHeight);
         // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        Bitmap resizedBitmap = null;
+        try {
+            resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        }
+        catch (OutOfMemoryError e)
+        {
+            Log.e(LOG_TAG, "Out Of Memory Error");
+        }
         return resizedBitmap;
     }
 }
