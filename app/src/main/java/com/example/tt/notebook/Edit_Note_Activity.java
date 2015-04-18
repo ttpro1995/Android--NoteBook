@@ -27,7 +27,7 @@ import java.io.OutputStreamWriter;
 
 
 // with no drawer
-//This activity is now useless
+//This activity is now USELESS
 //Which is replace by Drawer_edit_activity
 
 public class Edit_Note_Activity extends ActionBarActivity {
