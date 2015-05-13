@@ -1,4 +1,9 @@
 #Notebook
+<a href="https://scan.coverity.com/projects/5116">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/5116/badge.svg"/>
+</a>
+
 ###build with Android Studio
 <br>
 ### This app is use to save note. 
