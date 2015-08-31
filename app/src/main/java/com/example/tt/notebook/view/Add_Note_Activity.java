@@ -1,6 +1,5 @@
-package com.example.tt.notebook;
+package com.example.tt.notebook.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -12,14 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.example.tt.notebook.BackGroundSingleton;
+import com.example.tt.notebook.ImproveNoteManager;
+import com.example.tt.notebook.NoteManager;
+import com.example.tt.notebook.R;
 
 
 public class Add_Note_Activity extends ActionBarActivity {
 
     private EditText nameEdit;
     private Button addButton;
-    private NoteManager noteManager;
+    //private NoteManager noteManager;
+    private ImproveNoteManager improveNoteManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,16 +33,17 @@ public class Add_Note_Activity extends ActionBarActivity {
 
         nameEdit = (EditText) findViewById(R.id.NoteNameEditText);
         addButton = (Button) findViewById(R.id.AddNoteButton);
-        noteManager = new NoteManager(this);
-
+        //noteManager = new NoteManager(this);
+        improveNoteManager = new ImproveNoteManager(this);
 
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String note_name = nameEdit.getText().toString();
-                noteManager.AddFile(note_name);
-                noteManager.SaveNoteName();
+                //noteManager.AddFile(note_name);
+                //noteManager.SaveNoteName();
+                improveNoteManager.createNewNote(note_name);
                 Intent intent = new Intent(Add_Note_Activity.this,Drawer_edit_activity.class);
                 intent.putExtra("name",note_name);
                 startActivity(intent);

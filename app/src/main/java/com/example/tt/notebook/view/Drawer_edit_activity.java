@@ -1,6 +1,5 @@
-package com.example.tt.notebook;
+package com.example.tt.notebook.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -20,6 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.tt.notebook.BackGroundSingleton;
+import com.example.tt.notebook.ImproveNoteManager;
+import com.example.tt.notebook.NoteManager;
+import com.example.tt.notebook.R;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,9 +35,10 @@ import java.util.ArrayList;
 
 
 public class Drawer_edit_activity extends ActionBarActivity {
-    private NoteManager noteManager;
+   // private NoteManager noteManager;
+    private ImproveNoteManager improveNoteManager;
     private ListView list;
-    private EditText NoteContent;
+    private EditText noteContent;
     private Button SaveButton;
     private Button DeleteButton;
     private String NOTE_NAME ;// no .txt
@@ -51,22 +56,24 @@ public class Drawer_edit_activity extends ActionBarActivity {
         //reduce lag
         new LoadLayoutBackground().execute();
 
-        noteManager = new NoteManager(this);
+        //noteManager = new NoteManager(this);
+        improveNoteManager = new ImproveNoteManager(this);
+
         //done: edit note
-        NoteContent = (EditText) findViewById(R.id.NoteContentEditTextDrawer);
+        noteContent = (EditText) findViewById(R.id.NoteContentEditTextDrawer);
         SaveButton = (Button) findViewById(R.id.SaveNoteButtonDrawer);
         DeleteButton = (Button) findViewById(R.id.DeleteNoteButtonDrawer);
         Bundle data = getIntent().getExtras();
         NOTE_NAME = data.getString("name");
         this.setTitle(NOTE_NAME);
         FILE_NAME = NOTE_NAME + ".txt";
-        ReadFile();
+        readNote();
 
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WriteFile();
-                ReadFile();
+                writeNote();
+                readNote();
                Toast toast = Toast.makeText(Drawer_edit_activity.this,"saved",Toast.LENGTH_SHORT);
             toast.show();
 
@@ -102,11 +109,11 @@ public class Drawer_edit_activity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 drawerLayout.closeDrawers();
-                String note_name = noteManager.getP_arr().get(position);
+                String note_name = improveNoteManager.getNameArray().get(position);
                 NOTE_NAME = note_name;
                 Drawer_edit_activity.this.setTitle(NOTE_NAME);
                 FILE_NAME = NOTE_NAME+".txt";
-                ReadFile();
+                readNote();
             }
         });
 
@@ -137,56 +144,24 @@ public class Drawer_edit_activity extends ActionBarActivity {
     public void updateList()
     {
         ArrayList<String> p_arr ;
-        noteManager.ReadNoteName();
-        p_arr = noteManager.getP_arr();
+        //noteManager.ReadNoteName();
+       // p_arr = noteManager.getP_arr();
+        p_arr = improveNoteManager.getNameArray();
         ArrayAdapter adapter = new ArrayAdapter(this,R.layout.item,R.id.itemTextView,p_arr);
         list.setAdapter(adapter);
     }
 
-    public void ReadFile()
+    public void readNote()
     {//TODO: use thread
-        String tmp;
-        String out;
-        try {
-            FileInputStream in = openFileInput(FILE_NAME);
-            InputStreamReader inputStreamReader = new InputStreamReader(in);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuilder builder = new StringBuilder();
-            while ((tmp = bufferedReader.readLine())!=null)
-            {
-                builder.append(tmp);
-                builder.append("\n");
-            }
-            out = builder.toString();
-            NoteContent.setText(out);
-        }
-        catch (FileNotFoundException e)
-        {
-
-        }
-        catch (IOException e)
-        {
-
-        }
-
+        String data;
+        data = improveNoteManager.readNote(NOTE_NAME);
+        noteContent.setText(data);
     }
 
-    public void WriteFile()
+    public void writeNote()
     {//TODO: use thread
-        String tmp;
-
-        try{
-            FileOutputStream out = openFileOutput(FILE_NAME,0);
-            OutputStreamWriter writer = new OutputStreamWriter(out);
-            writer.write(NoteContent.getText().toString());
-            writer.close();
-        }
-        catch (FileNotFoundException e){
-
-        }
-        catch (IOException e){
-            //do nothing
-        }
+        String data = noteContent.getText().toString();
+        improveNoteManager.editNote(NOTE_NAME,data);
     }
 
 

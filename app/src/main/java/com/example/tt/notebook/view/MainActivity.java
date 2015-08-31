@@ -1,20 +1,12 @@
-package com.example.tt.notebook;
+package com.example.tt.notebook.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +16,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.example.tt.notebook.BackGroundSingleton;
+import com.example.tt.notebook.ImproveNoteManager;
+import com.example.tt.notebook.NoteManager;
+import com.example.tt.notebook.R;
+import com.example.tt.notebook.model.Note;
+
 import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private NoteManager noteManager;
+    private ImproveNoteManager improveNoteManager;
     private ListView list;
     private Button NewNote;
     @Override
@@ -44,8 +43,9 @@ public class MainActivity extends ActionBarActivity {
 
         list = (ListView) findViewById(R.id.listView);
         NewNote = (Button) findViewById(R.id.NewNoteButton);
-        noteManager = new NoteManager(this);
-        noteManager.ReadNoteName();
+        improveNoteManager = new ImproveNoteManager(this);
+        //noteManager = new NoteManager(this);
+        //noteManager.ReadNoteName();
         updateList();
         NewNote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +65,11 @@ public class MainActivity extends ActionBarActivity {
 
                 //debug code
                 Intent intent = new Intent(MainActivity.this, Drawer_edit_activity.class);
-                String note_name = noteManager.getP_arr().get(position);
+
+                ArrayList<Note> notes = improveNoteManager.loadNote();
+                String note_name = notes.get(position).getName();
                 intent.putExtra("name",note_name);
+                intent.putExtra(getResources().getString(R.string.extra_id),notes.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -95,8 +98,9 @@ public class MainActivity extends ActionBarActivity {
     public void updateList()
     {
         ArrayList<String> p_arr ;
-        noteManager.ReadNoteName();
-        p_arr = noteManager.getP_arr();
+       // noteManager.ReadNoteName();
+       // p_arr = noteManager.getP_arr();
+        p_arr = improveNoteManager.getNameArray();
         ArrayAdapter adapter = new ArrayAdapter(this,R.layout.item,R.id.itemTextView,p_arr);
         list.setAdapter(adapter);
     }

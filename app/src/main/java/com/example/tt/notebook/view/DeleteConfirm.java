@@ -1,11 +1,10 @@
-package com.example.tt.notebook;
+package com.example.tt.notebook.view;
 
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.tt.notebook.BackGroundSingleton;
+import com.example.tt.notebook.NoteManager;
+import com.example.tt.notebook.R;
+import com.example.tt.notebook.ResizeDrawable;
 
 
 public class DeleteConfirm extends ActionBarActivity {
