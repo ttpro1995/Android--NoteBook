@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.example.tt.notebook.BackGroundSingleton;
 import com.example.tt.notebook.ImproveNoteManager;
+import com.example.tt.notebook.Navigator;
 import com.example.tt.notebook.NoteManager;
 import com.example.tt.notebook.R;
 
@@ -43,10 +44,8 @@ public class Add_Note_Activity extends ActionBarActivity {
                 String note_name = nameEdit.getText().toString();
                 //noteManager.AddFile(note_name);
                 //noteManager.SaveNoteName();
-                improveNoteManager.createNewNote(note_name);
-                Intent intent = new Intent(Add_Note_Activity.this,Drawer_edit_activity.class);
-                intent.putExtra("name",note_name);
-                startActivity(intent);
+               int id = improveNoteManager.createNewNote(note_name);
+                Navigator.naviEditNewNote(Add_Note_Activity.this,id);
             }
         });
     }

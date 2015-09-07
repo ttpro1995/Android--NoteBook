@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tt.notebook.BackGroundSingleton;
+import com.example.tt.notebook.ImproveNoteManager;
 import com.example.tt.notebook.NoteManager;
 import com.example.tt.notebook.R;
 import com.example.tt.notebook.ResizeDrawable;
@@ -24,13 +25,16 @@ public class DeleteConfirm extends ActionBarActivity {
     private Button Yes;
     private Button No;
     private NoteManager noteManager;
-    String NOTE_NAME;
+    private String NOTE_NAME;
+    private int NOTE_ID;
+    private ImproveNoteManager improveNoteManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_confirm);
         LOG_TAG=DeleteConfirm.class.getSimpleName();
-
+        improveNoteManager = new ImproveNoteManager(this);
 
         noteNameTextView = (TextView) findViewById(R.id.deleteNoteNameTextView);
         Yes=    (Button) findViewById(R.id.YesDeleteButton);
@@ -38,14 +42,15 @@ public class DeleteConfirm extends ActionBarActivity {
         noteManager = new NoteManager(this);
         Bundle data;
         data = getIntent().getExtras();
-       NOTE_NAME = data.get("name").toString();
+        NOTE_ID = data.getInt(getResources().getString(R.string.extra_id));
+       NOTE_NAME = improveNoteManager.queryID(NOTE_ID).getName();
         this.setTitle(NOTE_NAME);
         noteNameTextView.setText(NOTE_NAME);
 
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                noteManager.RemoveNote(NOTE_NAME);
+                improveNoteManager.removeNote(NOTE_ID);
                 NavUtils.navigateUpFromSameTask(DeleteConfirm.this);
             }
         });

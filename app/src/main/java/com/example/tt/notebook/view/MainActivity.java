@@ -18,8 +18,10 @@ import android.widget.ListView;
 
 import com.example.tt.notebook.BackGroundSingleton;
 import com.example.tt.notebook.ImproveNoteManager;
+import com.example.tt.notebook.Navigator;
 import com.example.tt.notebook.NoteManager;
 import com.example.tt.notebook.R;
+import com.example.tt.notebook.Tool.RealmTool;
 import com.example.tt.notebook.model.Note;
 
 import java.util.ArrayList;
@@ -31,6 +33,9 @@ public class MainActivity extends ActionBarActivity {
     private ImproveNoteManager improveNoteManager;
     private ListView list;
     private Button NewNote;
+
+    private Button exportButton;
+    private Button importButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +48,32 @@ public class MainActivity extends ActionBarActivity {
 
         list = (ListView) findViewById(R.id.listView);
         NewNote = (Button) findViewById(R.id.NewNoteButton);
+        exportButton = (Button) findViewById(R.id.exportButton);
+        importButton = (Button) findViewById(R.id.importButton);
+
+
+
         improveNoteManager = new ImproveNoteManager(this);
         //noteManager = new NoteManager(this);
         //noteManager.ReadNoteName();
+        exportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RealmTool.exportDatabase(MainActivity.this,improveNoteManager.getRealmConfiguration());
+            }
+        });
+        importButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RealmTool.importDatabase(MainActivity.this);
+
+            }
+        });
         updateList();
         NewNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,Add_Note_Activity.class);
-                startActivity(intent);
+                Navigator.naviNewNote(MainActivity.this);
             }
         });
 
@@ -60,17 +82,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-              //old code
-               // Intent intent = new Intent(MainActivity.this, Edit_Note_Activity.class);
-
-                //debug code
                 Intent intent = new Intent(MainActivity.this, Drawer_edit_activity.class);
 
-                ArrayList<Note> notes = improveNoteManager.loadNote();
-                String note_name = notes.get(position).getName();
-                intent.putExtra("name",note_name);
-                intent.putExtra(getResources().getString(R.string.extra_id),notes.get(position).getId());
-                startActivity(intent);
+                Navigator.naviEdit(MainActivity.this,position);
             }
         });
     }

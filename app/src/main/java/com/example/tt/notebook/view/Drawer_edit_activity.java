@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.tt.notebook.BackGroundSingleton;
 import com.example.tt.notebook.ImproveNoteManager;
+import com.example.tt.notebook.Navigator;
 import com.example.tt.notebook.NoteManager;
 import com.example.tt.notebook.R;
 
@@ -42,8 +43,8 @@ public class Drawer_edit_activity extends ActionBarActivity {
     private Button SaveButton;
     private Button DeleteButton;
     private String NOTE_NAME ;// no .txt
-    //only name
-    private String FILE_NAME;//FILENAME =NOTE_NAME+".txt"
+    private int NOTE_ID;
+
 
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
@@ -64,9 +65,10 @@ public class Drawer_edit_activity extends ActionBarActivity {
         SaveButton = (Button) findViewById(R.id.SaveNoteButtonDrawer);
         DeleteButton = (Button) findViewById(R.id.DeleteNoteButtonDrawer);
         Bundle data = getIntent().getExtras();
-        NOTE_NAME = data.getString("name");
+
+        NOTE_ID = data.getInt(getResources().getString(R.string.extra_id));
+        NOTE_NAME = improveNoteManager.queryID(NOTE_ID).getName();
         this.setTitle(NOTE_NAME);
-        FILE_NAME = NOTE_NAME + ".txt";
         readNote();
 
         SaveButton.setOnClickListener(new View.OnClickListener() {
@@ -83,9 +85,7 @@ public class Drawer_edit_activity extends ActionBarActivity {
         DeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Drawer_edit_activity.this,DeleteConfirm.class);
-                intent.putExtra("name",NOTE_NAME);
-                startActivity(intent);
+                Navigator.naviDelete(Drawer_edit_activity.this,NOTE_ID);
             }
         });
 
@@ -112,7 +112,7 @@ public class Drawer_edit_activity extends ActionBarActivity {
                 String note_name = improveNoteManager.getNameArray().get(position);
                 NOTE_NAME = note_name;
                 Drawer_edit_activity.this.setTitle(NOTE_NAME);
-                FILE_NAME = NOTE_NAME+".txt";
+
                 readNote();
             }
         });
@@ -154,14 +154,14 @@ public class Drawer_edit_activity extends ActionBarActivity {
     public void readNote()
     {//TODO: use thread
         String data;
-        data = improveNoteManager.readNote(NOTE_NAME);
+        data = improveNoteManager.readNote(NOTE_ID);
         noteContent.setText(data);
     }
 
     public void writeNote()
     {//TODO: use thread
         String data = noteContent.getText().toString();
-        improveNoteManager.editNote(NOTE_NAME,data);
+        improveNoteManager.editNote(NOTE_ID,data);
     }
 
 

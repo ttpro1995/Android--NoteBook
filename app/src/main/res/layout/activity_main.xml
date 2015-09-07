@@ -15,7 +15,7 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="10"
         android:id="@+id/listView"
         >
@@ -28,8 +28,23 @@
         android:text="New Note"
         android:id="@+id/NewNoteButton"
         android:drawableLeft="@drawable/new_doc_50x50"
+        />
 
-
+    <Button
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="export database"
+        android:id="@+id/exportButton"
+        />
+    <Button
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="import database"
+        android:id="@+id/importButton"
         />
 
 </LinearLayout>

@@ -11,4 +11,6 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="extra_id">EXTRA_ID</string>
+    <string name="extra_name">name</string>
+
 </resources>
