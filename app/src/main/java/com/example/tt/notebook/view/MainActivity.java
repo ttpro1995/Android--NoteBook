@@ -1,9 +1,11 @@
 package com.example.tt.notebook.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
 
         //with LoadLayoutBackground , main thread is not lag any more
         //resize job is doing in LoadLayoutBackground extend AsyncTask
+        importRealm();
 
 
         list = (ListView) findViewById(R.id.listView);
@@ -87,6 +90,20 @@ public class MainActivity extends ActionBarActivity {
                 Navigator.naviEdit(MainActivity.this,position);
             }
         });
+    }
+
+    private void importRealm(){
+        int isImport = 0;
+        SharedPreferences sharedPreferences;
+        SharedPreferences.Editor editor;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
+        isImport = sharedPreferences.getInt(getResources().getString(R.string.extra_is_import),0);
+        if (isImport ==0)
+        {RealmTool.importDatabase(this);
+            editor.putInt(getResources().getString(R.string.extra_is_import),1);
+            editor.commit();
+        }
     }
 
     private void UnloadBackground()
