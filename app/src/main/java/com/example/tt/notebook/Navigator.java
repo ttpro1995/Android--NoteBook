@@ -7,6 +7,7 @@ import com.example.tt.notebook.model.Note;
 import com.example.tt.notebook.view.Add_Note_Activity;
 import com.example.tt.notebook.view.DeleteConfirm;
 import com.example.tt.notebook.view.Drawer_edit_activity;
+import com.example.tt.notebook.view.MainActivity;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,11 @@ public class Navigator {
     public static void naviDelete(Context context, int id){
         Intent intent = new Intent(context,DeleteConfirm.class);
         intent.putExtra(context.getResources().getString(R.string.extra_id),id);
+        context.startActivity(intent);
+    }
+
+    public static void naviStartApp(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
 }

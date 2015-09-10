@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tt.notebook" >
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- parse start -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!--
+      IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
+      to match your app's package name + ".permission.C2D_MESSAGE".
+    -->
+    <permission android:protectionLevel="signature"
+        android:name="com.example.tt.notebook.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.example.tt.notebook.permission.C2D_MESSAGE" />
+    <!-- parse end -->
     <application
+        android:name=".NotebookApp"
         android:allowBackup="true"
         android:icon="@drawable/notebook"
         android:label="@string/app_name"
@@ -11,23 +30,13 @@
         <activity
             android:name=".view.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.Add_Note_Activity"
             android:label="Note Name"
             android:parentActivityName=".view.MainActivity" >
             />
-        </activity>
-        <activity
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            android:name=".view.Edit_Note_Activity"
-            android:label="Edit Note"
-            android:parentActivityName=".view.MainActivity" >
         </activity>
         <activity
             android:name=".view.DeleteConfirm"
@@ -40,7 +49,47 @@
         <activity
             android:name=".view.Drawer_edit_activity"
             android:label="@string/title_activity_drawer_edit_activity"
-            android:parentActivityName=".view.MainActivity">
+            android:parentActivityName=".view.MainActivity" >
+        </activity>
+
+        <!-- parse start here -->
+        <service android:name="com.parse.PushService" />
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+<!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
+                <category android:name="com.example.tt.notebook" />
+            </intent-filter>
+        </receiver>
+        <!-- parse end -->
+        <activity
+            android:name=".view.StartScreen"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -65,7 +65,7 @@ public class RealmTool {
             is = assetManager.open("import.realm");
             File dest = new File(dir);
             if (dest.exists())
-                dest.delete();
+               dest.delete();
             copy(is,dest);
         }catch (IOException e){
             Log.e(LOG_TAG,"import database error");
